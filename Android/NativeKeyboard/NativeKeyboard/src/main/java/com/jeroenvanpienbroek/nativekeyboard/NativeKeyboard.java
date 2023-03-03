@@ -36,10 +36,10 @@ import android.widget.TextView;
 
 import androidx.autofill.HintConstants;
 
-import com.google.android.gms.auth.api.phone.SmsRetriever;
-import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+//import com.google.android.gms.auth.api.phone.SmsRetriever;
+//import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
+//import com.google.android.gms.tasks.OnFailureListener;
+//import com.google.android.gms.tasks.OnSuccessListener;
 import com.jeroenvanpienbroek.nativekeyboard.textvalidator.CharacterValidator;
 import com.jeroenvanpienbroek.nativekeyboard.textvalidator.TextValidator;
 import com.unity3d.player.UnityPlayer;
@@ -198,7 +198,7 @@ public class NativeKeyboard extends Fragment implements TextWatcher, TextView.On
     /** The tag of this Fragment */
     public static final String TAG = "NativeKeyboardFragment";
 
-    public static final int REQUEST_SMS_USER_CONSENT = 143;
+//    public static final int REQUEST_SMS_USER_CONSENT = 143;
     //endregion
 
     /** The globally accessible instance of this class */
@@ -236,8 +236,8 @@ public class NativeKeyboard extends Fragment implements TextWatcher, TextView.On
     private int lastSelectionStartPosition;
     private int lastSelectionEndPosition;
     public int lastKeyboardHeight;
-    private SMSBroadcastReceiver smsBroadcastReceiver;
-    private String longestNumberSequence;
+//    private SMSBroadcastReceiver smsBroadcastReceiver;
+//    private String longestNumberSequence;
 
     private long pendingStartTime;
     private boolean navigationBarWasVisible;
@@ -373,8 +373,8 @@ public class NativeKeyboard extends Fragment implements TextWatcher, TextView.On
                         break;
                     case NEW_PASSWORD: autofillView.setAutofillHints(HintConstants.AUTOFILL_HINT_NEW_PASSWORD);
                         break;
-                    case ONE_TIME_CODE: autofillView.setAutofillHints(HintConstants.AUTOFILL_HINT_SMS_OTP);
-                        break;
+//                    case ONE_TIME_CODE: autofillView.setAutofillHints(HintConstants.AUTOFILL_HINT_SMS_OTP);
+//                        break;
                     case NAME: autofillView.setAutofillHints(HintConstants.AUTOFILL_HINT_PERSON_NAME);
                         break;
                     case GIVEN_NAME: autofillView.setAutofillHints(HintConstants.AUTOFILL_HINT_PERSON_NAME_GIVEN);
@@ -458,23 +458,23 @@ public class NativeKeyboard extends Fragment implements TextWatcher, TextView.On
         super.onDestroy();
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if(requestCode == REQUEST_SMS_USER_CONSENT)
-        {
-            if (resultCode == Activity.RESULT_OK && data != null)
-            {
-                String message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE);
-                if(message != null)
-                {
-                    parseSMSMessage(message);
-                }
-            }
-        }
-
-        super.onActivityResult(requestCode, resultCode, data);
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data)
+//    {
+//        if(requestCode == REQUEST_SMS_USER_CONSENT)
+//        {
+//            if (resultCode == Activity.RESULT_OK && data != null)
+//            {
+//                String message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE);
+//                if(message != null)
+//                {
+//                    parseSMSMessage(message);
+//                }
+//            }
+//        }
+//
+//        super.onActivityResult(requestCode, resultCode, data);
+//    }
     //endregion
 
     private void setNewestTextEditUpdateEvent(TextEditUpdateEvent textEditUpdateEvent)
@@ -493,85 +493,85 @@ public class NativeKeyboard extends Fragment implements TextWatcher, TextView.On
         }
     }
 
-    private void startSmsUserConsent()
-    {
-        SmsRetrieverClient client = SmsRetriever.getClient(getActivity());
-        if(client != null)
-        {
-            //We can add user phone number or leave it blank
-            client.startSmsUserConsent(null).addOnSuccessListener(new OnSuccessListener<Void>()
-            {
-                @Override
-                public void onSuccess(Void aVoid)
-                {
-                    //Log.d(TAG, "LISTENING_SUCCESS");
-                }
-            });
-            client.startSmsUserConsent(null).addOnFailureListener(new OnFailureListener()
-            {
-                @Override
-                public void onFailure(Exception exception)
-                {
-                    //Log.d(TAG, "LISTENING_FAILURE");
-                }
-            });
-        }
-    }
+//    private void startSmsUserConsent()
+//    {
+//        SmsRetrieverClient client = SmsRetriever.getClient(getActivity());
+//        if(client != null)
+//        {
+//            //We can add user phone number or leave it blank
+//            client.startSmsUserConsent(null).addOnSuccessListener(new OnSuccessListener<Void>()
+//            {
+//                @Override
+//                public void onSuccess(Void aVoid)
+//                {
+//                    //Log.d(TAG, "LISTENING_SUCCESS");
+//                }
+//            });
+//            client.startSmsUserConsent(null).addOnFailureListener(new OnFailureListener()
+//            {
+//                @Override
+//                public void onFailure(Exception exception)
+//                {
+//                    //Log.d(TAG, "LISTENING_FAILURE");
+//                }
+//            });
+//        }
+//    }
 
-    private void registerToSmsBroadcastReceiver()
-    {
-        smsBroadcastReceiver = new SMSBroadcastReceiver();
-        smsBroadcastReceiver.smsBroadcastReceiverListener = new SMSBroadcastReceiverListener() {
-            @Override
-            public void onSuccess(Intent intent)
-            {
-                if(intent != null)
-                {
-                    startActivityForResult(intent, REQUEST_SMS_USER_CONSENT);
-                }
-            }
+//    private void registerToSmsBroadcastReceiver()
+//    {
+//        smsBroadcastReceiver = new SMSBroadcastReceiver();
+//        smsBroadcastReceiver.smsBroadcastReceiverListener = new SMSBroadcastReceiverListener() {
+//            @Override
+//            public void onSuccess(Intent intent)
+//            {
+//                if(intent != null)
+//                {
+//                    startActivityForResult(intent, REQUEST_SMS_USER_CONSENT);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure()
+//            {
+//                //Log.d(TAG, "Register failed");
+//            }
+//        };
+//
+//        IntentFilter intentFilter = new IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION);
+//        getActivity().registerReceiver(smsBroadcastReceiver, intentFilter);
+//    }
 
-            @Override
-            public void onFailure()
-            {
-                //Log.d(TAG, "Register failed");
-            }
-        };
-
-        IntentFilter intentFilter = new IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION);
-        getActivity().registerReceiver(smsBroadcastReceiver, intentFilter);
-    }
-
-    public void parseSMSMessage(String message)
-    {
-        longestNumberSequence = "";
-        String currentNumberSequence = "";
-
-        int length = message.length();
-        for(int i = 0; i < length; i++)
-        {
-            char c = message.charAt(i);
-            if(Character.isDigit(c))
-            {
-                currentNumberSequence += c;
-                if(currentNumberSequence.length() > longestNumberSequence.length())
-                {
-                    longestNumberSequence = currentNumberSequence;
-                }
-            }
-            else
-            {
-                currentNumberSequence = "";
-            }
-        }
-
-        if(longestNumberSequence.length() > 0)
-        {
-            DummyView oneTimeCodeView = getViewForAutofill(AutofillType.ONE_TIME_CODE);
-            oneTimeCodeView.setText(longestNumberSequence);
-            unityCallback.OnAutofillUpdate(longestNumberSequence, AutofillType.ONE_TIME_CODE.ordinal());
-        }
-    }
+//    public void parseSMSMessage(String message)
+//    {
+//        longestNumberSequence = "";
+//        String currentNumberSequence = "";
+//
+//        int length = message.length();
+//        for(int i = 0; i < length; i++)
+//        {
+//            char c = message.charAt(i);
+//            if(Character.isDigit(c))
+//            {
+//                currentNumberSequence += c;
+//                if(currentNumberSequence.length() > longestNumberSequence.length())
+//                {
+//                    longestNumberSequence = currentNumberSequence;
+//                }
+//            }
+//            else
+//            {
+//                currentNumberSequence = "";
+//            }
+//        }
+//
+//        if(longestNumberSequence.length() > 0)
+//        {
+//            DummyView oneTimeCodeView = getViewForAutofill(AutofillType.ONE_TIME_CODE);
+//            oneTimeCodeView.setText(longestNumberSequence);
+//            unityCallback.OnAutofillUpdate(longestNumberSequence, AutofillType.ONE_TIME_CODE.ordinal());
+//        }
+//    }
 
     //For some reason this makes sure the navigation bar stays visible when shown
     private void initNavigationBar()
@@ -1457,37 +1457,37 @@ public class NativeKeyboard extends Fragment implements TextWatcher, TextView.On
         catch(Exception e) {}
     }
 
-    public static void startListeningForOneTimeCodes()
-    {
-        try
-        {
-            Handler mainHandler = new Handler(Looper.getMainLooper());
-            Runnable runnable = new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    if (Build.VERSION.SDK_INT >= 26)
-                    {
-                        try
-                        {
-                            if(instance.smsBroadcastReceiver == null)
-                            {
-                                instance.registerToSmsBroadcastReceiver();
-                            }
-                            instance.startSmsUserConsent();
-                        }
-                        catch (Exception e)
-                        {
-                            Log.d(TAG, "Failed to start listening for one time codes: " + e.getMessage());
-                        }
-                    }
-                }
-            };
-            mainHandler.post(runnable);
-        }
-        catch(Exception e) {}
-    }
+//    public static void startListeningForOneTimeCodes()
+//    {
+//        try
+//        {
+//            Handler mainHandler = new Handler(Looper.getMainLooper());
+//            Runnable runnable = new Runnable()
+//            {
+//                @Override
+//                public void run()
+//                {
+//                    if (Build.VERSION.SDK_INT >= 26)
+//                    {
+//                        try
+//                        {
+//                            if(instance.smsBroadcastReceiver == null)
+//                            {
+//                                instance.registerToSmsBroadcastReceiver();
+//                            }
+//                            instance.startSmsUserConsent();
+//                        }
+//                        catch (Exception e)
+//                        {
+//                            Log.d(TAG, "Failed to start listening for one time codes: " + e.getMessage());
+//                        }
+//                    }
+//                }
+//            };
+//            mainHandler.post(runnable);
+//        }
+//        catch(Exception e) {}
+//    }
 
     public static void saveCredentials()
     {

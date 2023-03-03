@@ -30,8 +30,8 @@ android {
 dependencies {
     compileOnly files('./libs/UnityPlayer.jar')
     implementation 'androidx.autofill:autofill:1.0.0'
-    implementation "com.google.android.gms:play-services-auth:17.0.0"
-    implementation "com.google.android.gms:play-services-auth-api-phone:17.1.0"
+//    implementation "com.google.android.gms:play-services-auth:17.0.0"
+//    implementation "com.google.android.gms:play-services-auth-api-phone:17.1.0"
     // Avoid redundant Unity Player in final application APK
 }
 
