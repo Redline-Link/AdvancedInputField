@@ -1,0 +1,15 @@
+{
+    "name": "com.fennecx.advancedinputfield",
+    "displayName": "advancedinputfield",
+    "version": "2.2.0",
+    "unity": "2022.3",
+    "license": "MIT",
+    "dependencies": {
+    },
+    "author": {
+      "name": "Kouhei Shoji",
+      "url": "https://github.com/ca-pigg"
+    },
+    "type": "tool",
+    "description": "Advanced Input Field is a Unity component for mobile devices that offers a lot of functionalities that the default Unity Input Field lacks."
+  }
